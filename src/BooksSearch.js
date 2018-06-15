@@ -26,21 +26,14 @@ const styles = theme => ({
     }
 });
 
-class BooksSearch extends Component
-{
-    constructor(props){
-        super(props);
-        this.state.myBookList = props.myBookList;
-    }
-
+class BooksSearch extends Component {
     state = {
         books: [],
-        myBookList: [],
-        showProgress: false
+        showProgress: false,
+        myBookList: this.props.myBookList
     }
 
-    onSearchTextChange = (event) =>
-    {
+    onSearchTextChange = (event) => {
         event.preventDefault();
         const { value } = event.target;
 
@@ -62,14 +55,12 @@ class BooksSearch extends Component
         const found = this.state.myBookList.filter(item => book.id === item.id);
         if (found.length > 0) {
             book.shelf = found[0].shelf;
-            return book;
-        } else {
-            return book;
         }
+
+        return book;
     }
 
-    render()
-    {
+    render() {
         const { classes, onBooksShelfChange} = this.props;
         const { books, showProgress } = this.state;
 

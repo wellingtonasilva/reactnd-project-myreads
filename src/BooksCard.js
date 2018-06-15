@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { BooksShelf } from  './BooksUtils';
+import { booksShelf } from  './utils';
 
 const styles = theme => ({
     card: {
@@ -27,13 +27,12 @@ const styles = theme => ({
     }
 });
 
-class BooksCard extends Component
-{
+class BooksCard extends Component {
     constructor(props) {
         super(props);
         this.state.book = props.book;
         this.state.shelf = props.book.shelf === undefined ? 'none' : props.book.shelf;
-        this.state.selectedIndex = BooksShelf.filter(item => item.status === this.state.shelf)[0].index;
+        this.state.selectedIndex = booksShelf.filter(item => item.status === this.state.shelf)[0].index;
         this.onBooksShelfChange = props.onBooksShelfChange;
     }
 
@@ -54,7 +53,7 @@ class BooksCard extends Component
             anchorEl: null,
             selectedIndex: index,
         });
-        this.onBooksShelfChange(event, this.state.book, BooksShelf[index].status);
+        this.onBooksShelfChange(event, this.state.book, booksShelf[index].status);
     }
 
     handleClose = () => {
@@ -63,8 +62,7 @@ class BooksCard extends Component
         });
     }
 
-    render()
-    {
+    render() {
         const { classes} = this.props;
         const { book, anchorEl } = this.state;
 
@@ -102,7 +100,7 @@ class BooksCard extends Component
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    {BooksShelf.map((option,index) => (
+                    {booksShelf.map((option,index) => (
                         <MenuItem
                             key={option.title}
                             disabled={option.clickable === false}

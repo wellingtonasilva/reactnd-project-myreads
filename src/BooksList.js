@@ -14,10 +14,8 @@ const styles = theme => ({
     })
 });
 
-class BooksList extends Component
-{
-    render()
-    {
+class BooksList extends Component {
+    render() {
         const { bookList, shelf, classes, title, onBooksShelfChange } = this.props;
         const currentShelfList = bookList.filter(item => item.shelf === shelf);
 

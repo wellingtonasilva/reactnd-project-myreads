@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import BooksList from './BooksList';
 import BooksSearch from './BooksSearch';
 import * as BooksAPI from './BooksAPI';
-import { BooksShelf } from './BooksUtils';
+import { booksShelf } from './utils';
 
 const styles = theme => ({
         root: {
@@ -27,32 +27,28 @@ const styles = theme => ({
         }
     });
 
-class BooksApp extends Component
-{
+class BooksApp extends Component {
     state = {
         bookList: [],
         showProgress: true,
     }
 
-    componentDidMount()
-    {
-        this.refresh();
+    async componentDidMount() {
+        await this.refresh();
     }
 
     onBooksShelfChange = (e, book, shelf) => {
         BooksAPI.update(book, shelf).then(res => this.refresh());
     }
 
-    refresh = () =>
-    {
+    refresh = () => {
         BooksAPI.getAll().then(res => this.setState({
             bookList: res,
             showProgress: false,
         }));
     }
 
-    render()
-    {
+    render() {
         const { classes } = this.props;
         const { bookList, showProgress } = this.state;
 
@@ -63,7 +59,7 @@ class BooksApp extends Component
                         {showProgress &&
                             <CircularProgress className={classes.progress} />
                         }
-                        { bookList.length > 0 && BooksShelf
+                        { bookList.length > 0 && booksShelf
                             .filter(item => item.canList)
                             .map(item => (
                         <BooksList key={item.index} bookList={bookList} shelf={item.status}

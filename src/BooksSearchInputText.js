@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { Debounce } from 'react-throttle';
 
 const styles = theme => ({
     root: theme.mixins.gutters({
@@ -9,24 +10,22 @@ const styles = theme => ({
     })
 });
 
-class BooksSearch extends Component
-{
-    render()
-    {
-        const { onSearchTextChange } = this.props;
-
+class BooksSearch extends PureComponent {
+    render() {
         return (
             <div>
-                <TextField
-                    id='query'
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    placeholder="Search"
-                    fullWidth
-                    margin="normal"
-                    onChange={ (event) => onSearchTextChange(event)}
-                />
+                <Debounce time='300' handler='onChange'>
+                    <TextField
+                        id='query'
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        placeholder="Search"
+                        fullWidth
+                        margin="normal"
+                        onChange={this.props.onSearchTextChange}
+                    />
+                </Debounce>
         </div>
         );
     }
